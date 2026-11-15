@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('Validate') {
       steps {
-        sh '''echo "$VERSION" | grep -Eq '^v[0-9]+(\.[0-9]+){0,2}$' '''
+        sh 'echo "$VERSION" | grep -Eq "^v[0-9]+([.][0-9]+){0,2}$"'
         script { currentBuild.displayName = "#${env.BUILD_NUMBER} ${params.ACTION} ${params.VERSION}" }
       }
     }
