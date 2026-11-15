@@ -1,0 +1,1 @@
+const test=require('node:test'),assert=require('node:assert/strict');const {result}=require('../src/format');test('formats a result',()=>assert.match(result({number:2,result:'SUCCESS',duration:1000},'url'),/✅ build #2/));
