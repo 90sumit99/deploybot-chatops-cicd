@@ -1,0 +1,16 @@
+services:
+  app:
+    image: deploybot-app:${APP_VERSION:-v1}
+    container_name: deploybot-app
+    ports: ["${APP_HOST_PORT:-8081}:3000"]
+    environment:
+      APP_VERSION: ${APP_VERSION:-v1}
+      FAIL_HEALTH: ${FAIL_HEALTH:-false}
+      PORT: "3000"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://localhost:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+    restart: unless-stopped
+    networks: [deploybot-net]
+networks:
+  deploybot-net:
+    external: true
