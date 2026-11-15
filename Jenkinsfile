@@ -31,5 +31,19 @@ pipeline {
       steps { sh './scripts/healthcheck.sh "$(cat /var/jenkins_home/deploy-state/current)"' }
     }
   }
-  post { success { script { currentBuild.description = "${params.ACTION} ${params.VERSION}: success" } } failure { script { currentBuild.description = "${params.ACTION} ${params.VERSION}: failed" } } always { echo 'DeployBot pipeline finished' } }
+  post {
+    success {
+      script {
+        currentBuild.description = "${params.ACTION} ${params.VERSION}: success"
+      }
+    }
+    failure {
+      script {
+        currentBuild.description = "${params.ACTION} ${params.VERSION}: failed"
+      }
+    }
+    always {
+      echo 'DeployBot pipeline finished'
+    }
+  }
 }
