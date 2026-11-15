@@ -1,0 +1,9 @@
+node_modules/
+.env
+jenkins/.env
+bot/.env
+handoff/
+*.zip
+*.log
+.DS_Store
+deploy-state/
