@@ -1,0 +1,1 @@
+{"name":"deploybot-telegram","version":"1.0.0","private":true,"scripts":{"start":"node src/index.js","test":"node --test test/*.test.js","mock-jenkins":"node test/mock-jenkins.js"},"dependencies":{"dotenv":"^16.4.7","telegraf":"^4.16.3"}}

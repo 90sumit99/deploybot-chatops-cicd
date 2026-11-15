@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict');const {isValidVersion,parseDeploy}=require('../src/validate');
+test('version validation rejects injection',()=>{for(const x of ['v1','v1.2','v1.2.3'])assert.ok(isValidVersion(x));for(const x of ['v1; rm -rf /','V1','v1.2.3.4','','v'])assert.ok(!isValidVersion(x));assert.deepEqual(parseDeploy('v2 broken'),{version:'v2',simulateFailure:true,valid:true});});

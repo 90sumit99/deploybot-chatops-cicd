@@ -1,0 +1,3 @@
+require('dotenv').config();
+function getConfig(env=process.env){const required=['TELEGRAM_BOT_TOKEN','ALLOWED_CHAT_IDS','JENKINS_URL','JENKINS_USER','JENKINS_API_TOKEN'];const missing=required.filter(k=>!env[k]);if(missing.length)throw new Error(`Missing required environment variables: ${missing.join(', ')}`);return {...env,allowedChatIds:new Set(env.ALLOWED_CHAT_IDS.split(',').map(x=>x.trim())),jenkinsJob:env.JENKINS_JOB||'deploybot-pipeline',pollInterval:Number(env.POLL_INTERVAL_MS||3000),buildTimeout:Number(env.BUILD_TIMEOUT_MS||600000),appUrl:env.APP_URL||'http://localhost:8081',appContainer:env.APP_CONTAINER||'deploybot-app'};}
+module.exports={getConfig};
