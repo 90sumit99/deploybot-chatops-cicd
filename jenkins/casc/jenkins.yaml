@@ -1,0 +1,18 @@
+jenkins:
+  systemMessage: "DeployBot CI"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy: loggedInUsersCanDoAnything
+jobs:
+  - script: >
+      pipelineJob('deploybot-pipeline') {
+        definition { cpsScm { scm { git { remote { url(System.getenv('REPO_URL')) }; branches('*/' + (System.getenv('REPO_BRANCH') ?: 'main')) } }; scriptPath('Jenkinsfile') } }
+        parameters { choiceParam('ACTION', ['CI','DEPLOY','ROLLBACK'], 'Operation'); stringParam('VERSION', 'v1', 'Version'); booleanParam('SIMULATE_FAILURE', false, 'Fail health check') }
+        // SCM polling is for this local demo; GitHub webhooks are preferred in production.
+        triggers { scm('H/2 * * * *') }
+      }
